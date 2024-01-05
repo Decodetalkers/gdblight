@@ -1,9 +1,9 @@
-pkgname=gdblight
+pkgname=gdglight
 pkgver=0.1.0
 pkgrel=1.0
 pkgdesc='rust impliment for light'
 arch=('x86_64' 'aarch64')
-url='https://github.com/Decodetalkers/gdblight'
+url='https://github.com/Decodetalkers/gdglight'
 license=('MIT')
 makedepends=('git' 'ninja' 'meson' 'rust')
 source=('source.tar.gz')
