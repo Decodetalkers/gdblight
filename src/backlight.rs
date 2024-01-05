@@ -60,7 +60,7 @@ impl BackLightInfo {
     }
 
     pub fn get_light_percent(&self) -> u32 {
-        self.current_light * 100 / self.max_light
+        (self.current_light as f64 * 100. / self.max_light as f64).round() as u32
     }
 
     pub fn set_light_percent(&self, percent: u32) -> io::Result<()> {
@@ -69,7 +69,8 @@ impl BackLightInfo {
             .write(true)
             .truncate(true)
             .open(&self.file_path)?;
-        let final_value = (self.max_light * percent / 100).to_string();
+        let final_value =
+            (((self.max_light) as f64 * percent as f64 / 100.0).round() as u32).to_string();
         file.write_all(final_value.as_bytes())
     }
 }
