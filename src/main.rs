@@ -7,17 +7,11 @@ use clap::Parser;
 #[command(about="a tool to set backlight", long_about = None)]
 enum Cli {
     #[command(short_flag = 'A')]
-    Add {
-        percent: u32,
-    },
+    Add { percent: u32 },
     #[command(short_flag = 'D')]
-    Decrease {
-        percent: u32,
-    },
+    Decrease { percent: u32 },
     #[command(short_flag = 'T')]
-    To {
-        percent: u32,
-    },
+    To { percent: u32 },
     #[command(short_flag = 'I')]
     CurrentInfo,
 }
@@ -54,6 +48,12 @@ fn main() {
             return;
         }
     };
+
+    if final_percent > 100 {
+        eprintln!("cannot set value more than 100");
+        return;
+    }
+
     println!("will set light to {} percent", final_percent);
     backlight.set_light_percent(final_percent).unwrap();
 }
