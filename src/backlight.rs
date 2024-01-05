@@ -17,7 +17,7 @@ pub enum BackLightError {
     #[error("Parse Error")]
     ParseError,
     #[error("Not find a backlight file")]
-    BackLightNotFound
+    BackLightNotFound,
 }
 
 #[derive(Debug)]
@@ -36,10 +36,13 @@ fn read_to_light<P: AsRef<Path>>(path: P) -> Result<u32, BackLightError> {
 impl BackLightInfo {
     pub fn new() -> Result<Self, BackLightError> {
         let paths = glob::glob(BACKLIGHT_PATTERNL)?;
-        let pa = paths.flatten().next().ok_or(BackLightError::BackLightNotFound)?;
+        let pa = paths
+            .flatten()
+            .next()
+            .ok_or(BackLightError::BackLightNotFound)?;
 
         let maxlightfile = pa.join(MAX_LIGHT_FILE);
-        let max_light = read_to_light(&maxlightfile)?;
+        let max_light = read_to_light(maxlightfile)?;
         let lightfile = pa.join(BRIGHT_FILE);
         let current_light = read_to_light(&lightfile)?;
         Ok(Self {

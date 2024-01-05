@@ -7,18 +7,25 @@ use clap::Parser;
 #[command(about="a tool to set backlight", long_about = None)]
 enum Cli {
     #[command(short_flag = 'A')]
-    Add { percent: u32 },
+    Add {
+        percent: u32,
+    },
     #[command(short_flag = 'D')]
-    Decrease { percent: u32 },
+    Decrease {
+        percent: u32,
+    },
     #[command(short_flag = 'T')]
-    To { percent: u32 },
+    To {
+        percent: u32,
+    },
+    CurrentInfo,
 }
 
 fn main() {
     let backlight = match BackLightInfo::new() {
         Ok(backlight) => backlight,
         Err(e) => {
-            eprintln!("Error, cannot find backlight file, {e}");
+            eprintln!("Error, maybe not backlight file, {e}");
             return;
         }
     };
@@ -36,6 +43,14 @@ fn main() {
                 return;
             }
             current_percent - percent
+        }
+        Cli::CurrentInfo => {
+            let current_light = backlight.current_light();
+            let max_light = backlight.max_light();
+            println!("current_light: {current_light}");
+            println!("max_light:     {max_light}");
+            println!("light_percent: {current_percent}");
+            return;
         }
     };
     println!("will set light to {} percent", final_percent);
