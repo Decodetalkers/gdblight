@@ -18,6 +18,7 @@ enum Cli {
     To {
         percent: u32,
     },
+    #[command(short_flag = 'I')]
     CurrentInfo,
 }
 
