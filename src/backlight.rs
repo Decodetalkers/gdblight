@@ -32,7 +32,6 @@ fn read_to_light<P: AsRef<Path>>(path: P) -> Result<u32, BackLightError> {
     data.trim().parse().map_err(|_| BackLightError::ParseError)
 }
 
-#[allow(unused)]
 impl BackLightInfo {
     pub fn new() -> Result<Self, BackLightError> {
         let paths = glob::glob(BACKLIGHT_PATTERNL)?;
